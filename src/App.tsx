@@ -1,17 +1,22 @@
-import { createEffect, createSignal, For, Show } from 'solid-js';
-import { createStore, SetStoreFunction, Store } from "solid-js/store";
+import { createEffect, createSignal } from 'solid-js';
+import { createStore, type SetStoreFunction, type Store } from "solid-js/store";
 
 import styles from './App.module.css';
+import { Rounds } from './Round';
+import { Result } from './Result';
 
 
 function createLocalStore<T extends object>(
   name: string,
   init: T
 ): [Store<T>, SetStoreFunction<T>] {
+  // XXX: clean old version
+  localStorage.removeItem("words")
+
   const localState = localStorage.getItem(name)
-  const [state, setState] = createStore<T>(
-    localState ? JSON.parse(localState) : init
-  )
+  const seed = localState ? JSON.parse(localState) : init
+  const [state, setState] = createStore<T>(seed)
+
   createEffect(() => {
     const params = new URLSearchParams(location.search)
     const fingerprint = params.get("fingerprint")
@@ -31,8 +36,7 @@ function createLocalStore<T extends object>(
   return [state, setState]
 }
 
-
-function clean(input: string) {
+function cleanInput(input: string) {
   let value = input.includes(":")
     ? input.split(":")[1]
     : input
@@ -48,26 +52,13 @@ function clean(input: string) {
 }
 
 
-function Mu(props: any) {
+function Input(props: any) {
   const [input, setInput] = createSignal("")
-  const [fresh, setFresh] = createSignal<string[]>([])
-  const words = props.words
-  const setWords = props.setWords
+  const setCache = props.setCache
+
   const setter = (value: string) => {
-    const oldWords = new Set(words)
-    const newWords = clean(value)
-    const combined = new Set([...words, ...newWords])
-    const freshWords = []
-
-    for (const item of newWords) {
-      if (!oldWords.has(item)) {
-        freshWords.push(item)
-      }
-    }
-
-    setFresh(freshWords)
-
-    setWords([...combined])
+    const round = cleanInput(value)
+    setCache((rounds: Cache) => [...rounds, round])
   }
 
   const handleSubmit = (e: any) => {
@@ -85,71 +76,38 @@ function Mu(props: any) {
     }
   }
 
+  const handleCleanup = () => {
+    setCache([])
+  }
+
   return (
-    <>
-      <form class={styles.inputForm} onSubmit={handleSubmit}>
-        <textarea
-          onInput={handleInput}
-          value={input()}
-          placeholder="Has trobat 2 paraules de les 182 possibles (i cap tuti dels 6 que hi ha): nat, net."
-          autofocus={true}
-        ></textarea>
+    <form class={styles.inputForm} onSubmit={handleSubmit}>
+      <textarea
+        onInput={handleInput}
+        value={input()}
+        placeholder="Has trobat 2 paraules de les 182 possibles (i cap tuti dels 6 que hi ha): nat, net."
+        autofocus={true}
+      ></textarea>
 
-        <div class={styles.buttonSet}>
-          <button type="submit">Afegeix</button>
-          <button type="button" onClick={() => setWords([])}>Neteja cache</button>
-        </div>
-      </form>
-      <details open={false} class={styles.freshwords}>
-        <summary>Paraules noves ({fresh().length})</summary>
-        <ul class={styles.wordList}>
-          <For each={fresh()} fallback={<p>Cap paraula nova</p>}>
-            {(item, index) => <li data-index={index()} class={styles.word}>{item}</li>}
-          </For>
-        </ul>
-
-      </details>
-    </>
+      <div class={styles.buttonSet}>
+        <button type="submit">Afegeix</button>
+        <button type="button" onClick={handleCleanup}>Neteja cache</button>
+      </div>
+    </form>
   )
 }
 
-function Words(props: { items: string[] }) {
-  const items = props.items
-
-  return (
-    <div class={styles.result}>
-      <p>Paraules trobades: {items.length}</p>
-      <Show when={items.length > 0}>
-        <ul class={styles.wordList}>
-          <For each={items}>
-            {(item, index) => <li data-index={index()} class={styles.word}><Word>{item}</Word></li>}
-          </For>
-        </ul>
-      </Show>
-    </div>
-  )
-}
-
-function Word(props: { children: string }) {
-  const text = props.children
-  const word = text.split(" ", 1)[0]
-  const letters = new Set(word.split("").filter(x => x.match(/[a-z]/)))
-
-  return (
-    letters.size == 7
-      ? <span class={styles.tuti}>{text}</span>
-      : text
-  )
-}
+export type Round = Array<string>
+export type Cache = Array<Round>
 
 function App() {
-  const [words, setWords] = createLocalStore<string[]>("words", [])
+  const [cache, setCache] = createLocalStore<Cache>("fusiologic", [])
   const urlParams = new URLSearchParams(location.search)
 
   if (urlParams.has("fingerprint")) {
     const fingerprint = urlParams.get("fingerprint")!
     const data = atob(fingerprint)
-    setWords(JSON.parse(data))
+    setCache(JSON.parse(data))
   }
 
   return (
@@ -158,12 +116,12 @@ function App() {
         <h1>Fusiològic</h1>
       </header>
       <main>
-        <Mu setWords={setWords} words={words} />
-
-        <Words items={words} />
+        <Input setCache={setCache} cache={cache} />
+        <Rounds cache={cache} />
+        <Result cache={cache} />
       </main>
     </div>
-  );
-};
+  )
+}
 
 export default App;

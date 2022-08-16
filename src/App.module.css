@@ -34,13 +34,6 @@ main {
   resize: none;
 }
 
-.freshwords {
-  margin: 16px 0;
-  background-color: white;
-  border: 1px solid antiquewhite;
-  padding: 8px;
-}
-
 .buttonSet {
   display: flex;
   flex-direction: row;
@@ -60,49 +53,11 @@ main {
   margin: 8px;
 }
 
-.word {
-
+.buttonSet > button:hover {
+  background-color: gold;
 }
 
-.tuti {
-  color: crimson;
-}
-
-.wordList {
-  columns: 6;
-}
-
-@media (max-width: 900px) {
-  .wordList {
-    columns: 4;
-  }
-}
-
-@media (max-width: 600px) {
-  .wordList {
-    columns: 3;
-  }
-}
-
-@media (max-width: 450px) {
-  .wordList {
-    columns: 2;
-  }
-}
-
-@media (max-width: 360px) {
-  .wordList {
-    columns: 1;
-  }
-}
-
-.result {
-  background-color: white;
-  border: 4px solid antiquewhite;
-  border-radius: 4px;
-  padding: 8px;
-}
-
-.result > p {
-  margin: 0;
+.buttonSet > button:active {
+  background-color: gold;
+  border: 1px solid black;
 }
