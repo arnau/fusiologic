@@ -1,0 +1,36 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.display {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 20px;
+  padding: 4px;
+  font-size: 2.2rem;
+  text-align: center;
+  min-height: 60px;
+  width: 19rem;
+  margin: auto;
+}
+
+.error {
+  display: inline-block;
+  background-color: var(--error-bg-colour);
+  color: var(--error-fg-colour);
+  padding: 2px 4px;
+}
+
+.success {
+  display: inline-block;
+  color: black;
+  padding: 2px 4px;
+}
+
+.score {
+  display: inline-block;
+  background-color: var(--score-bg-colour);
+  color: var(--score-fg-colour);
+  padding: 2px 4px;
+}

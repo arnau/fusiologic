@@ -1,10 +1,9 @@
-
 import { createMemo, For, Show } from 'solid-js';
 import { Word } from './Words';
 
 import styles from './Result.module.css'
 import wordStyles from './Words.module.css'
-import { type Cache } from './App';
+import { type Cache } from './types';
 
 interface TaggedWord {
   round: number;

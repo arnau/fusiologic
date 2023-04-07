@@ -28,4 +28,3 @@ export function Word(props: { children: string }) {
       : text
   )
 }
-

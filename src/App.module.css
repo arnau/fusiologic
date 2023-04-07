@@ -1,14 +1,5 @@
-:root {
-  --fusiologic-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-}
-
-.App {
-}
-
 .header {
   align-items: center;
-  background-color: #282c34;
-  color: white;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
@@ -17,6 +8,25 @@
 
 .header > h1 {
   margin: 1rem;
+  font-size: 1rem;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.nav > a {
+  display: block;
+  background-color: var(--nav-bg-colour);
+  padding: 4px 16px;
+  text-decoration: none;
+  color: var(--nav-fg-colour);
+}
+
+.nav > :global(.active) {
+  background-color: var(--nav-active-bg-colour);
 }
 
 main {
@@ -29,7 +39,8 @@ main {
   margin: auto;
   width: 100%;
   font-family: var(--fusiologic-font);
-  border: 1px solid lightslategrey;
+  border: 1px solid var(--input-b-colour);
+  background-color: var(--input-active-bg-colour);
   padding: 16px;
   resize: none;
 }
@@ -45,19 +56,17 @@ main {
 }
 
 .buttonSet > button {
-  background-color: lightskyblue;
-  border: 1px solid lightblue;
+  background-color: var(--button-bg-colour);
+  border: 1px solid var(--button-b-colour);
   border-radius: 4px;
   font-size: 1.2rem;
   padding: 8px;
   margin: 8px;
+  color: black;
 }
 
+.buttonSet > button:active,
 .buttonSet > button:hover {
-  background-color: gold;
-}
-
-.buttonSet > button:active {
-  background-color: gold;
-  border: 1px solid black;
+  background-color: var(--button-active-bg-colour);
+  border: 1px solid var(--button-active-b-colour);
 }

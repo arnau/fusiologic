@@ -1,5 +1,5 @@
 import { For } from "solid-js"
-import { type Cache } from "./App"
+import { type Cache } from "./types"
 import { Words } from "./Words"
 
 import styles from './Rounds.module.css'

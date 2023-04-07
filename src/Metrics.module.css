@@ -1,0 +1,22 @@
+.digrams {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  grid-gap: 4px;
+}
+
+.digrams .item {
+  background-color: lightblue;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2px;
+}
+
+.digrams .key {
+  background-color: white;
+  padding: 0 2px;
+}
+
+.digrams .value {
+  text-align: end;
+  padding: 0 2px;
+}

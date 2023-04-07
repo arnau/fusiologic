@@ -1,0 +1,47 @@
+.result {
+  max-width: 500px;
+  min-width: 300px;
+  margin: auto;
+}
+
+.summary {
+  margin-bottom: 10px;
+}
+
+.group_set {
+  border: 1px solid var(--result-digram-colour);
+}
+
+.group {
+  display: grid;
+  gap: 2px;
+  grid-template-columns: 80px auto;
+  padding: 2px;
+}
+
+.group .header {
+  background-color: var(--result-digram-colour);
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+  width: 80px;
+  padding: 2px;
+}
+
+.group .word {
+  display: inline-block;
+  padding: 2px 0 2px 2px;
+}
+
+.word + .word::before {
+  content: ", ";
+  color: black;
+}
+
+.word:last-child {
+  padding-right: 8px;
+}
+
+.tuti {
+  color: var(--tuti-colour)
+}

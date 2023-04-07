@@ -1,20 +1,23 @@
 {
-  "name": "vite-template-solid",
-  "version": "0.0.0",
+  "name": "fusiologic",
+  "version": "0.2.0",
   "description": "",
+  "private": true,
+  "license": "MIT",
   "scripts": {
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "fetch_words": "node word_fetcher.js"
   },
-  "license": "MIT",
   "devDependencies": {
-    "typescript": "^4.7.4",
-    "vite": "^3.0.0",
-    "vite-plugin-solid": "^2.3.0"
+    "typescript": "^5.0.3",
+    "vite": "^4.2.1",
+    "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
-    "solid-js": "^1.4.7"
+    "@solidjs/router": "^0.8.2",
+    "solid-js": "^1.7.0"
   }
 }
