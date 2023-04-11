@@ -1,5 +1,4 @@
-import { createSignal } from "solid-js";
-import type { Bag, DigramMap, Letter, LetterSet, Word } from "./types";
+import type { Bag, DigramIndex, Letter, LetterSet, Word } from "./types";
 
 export function isTuti(word: Word, max: number) {
   const wordLetterNumber = (new Set(word)).size
@@ -54,7 +53,7 @@ const messages = {
 }
 
 export function validate(input: string, bag: Bag, isFound: boolean) {
-  const { letters, requiredLetter, wordMap } = bag
+  const { letters, requiredLetter, wordIndex} = bag
   const letterSet = [...letters, requiredLetter]
   const inputSet = [...input]
 
@@ -75,7 +74,7 @@ export function validate(input: string, bag: Bag, isFound: boolean) {
     return failWith(input, messages.invalidLetters(diff))
   }
 
-  if (!wordMap.has(input)) {
+  if (!wordIndex.has(input)) {
     return failWith(input, messages.unknownWord(input))
   }
 
@@ -90,24 +89,14 @@ export function failWith(value: string, reason: string) {
 
 // Metrics
 
-export function collectDigrams(words: Array<Word>): DigramMap {
-  const result: DigramMap = {}
-
-  const newDigramValue = () => {
-    const [found, setFound] = createSignal(0)
-
-    return ({ found, setFound, total: 1 })
-  }
+export function collectDigrams(words: Array<Word>): DigramIndex {
+  const result: DigramIndex = {}
 
   for (const word of words) {
     const di = word.slice(0, 2)
+    const value = result[di] ?? 0
 
-    if (result[di] === undefined) {
-      result[di] = newDigramValue()
-    } else {
-      const value = result[di]
-      result[di] = { ...value, total: value.total + 1 }
-    }
+    result[di] = value + 1
   }
 
   return result

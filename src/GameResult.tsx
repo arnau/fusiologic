@@ -1,4 +1,4 @@
-import { For, Show, createEffect, createMemo, createSignal } from "solid-js"
+import { For, Show, createMemo, createSignal } from "solid-js"
 import { useStore } from "./store"
 import type { DigramValue, Word } from "./types"
 import styles from './GameResult.module.css'
@@ -7,7 +7,7 @@ import { isTuti, totalScore } from './aux'
 
 export function GameResult() {
   const [legacy, setLegacy] = createSignal(false)
-  const [{ letters, words, digramMap, wordMap, stats }]: any = useStore()
+  const [{ letters, words, indices, stats }]: any = useStore()
   const letterNumber = () => letters().length + 1
   const list = () => {
     const array = [...words()]
@@ -16,8 +16,8 @@ export function GameResult() {
     return array
   }
   const currentPoints = () => totalScore(list(), letterNumber())
-  const totalPoints = createMemo(() => totalScore([...wordMap.keys()], letterNumber()))
-
+  const totalPoints = createMemo(() =>
+    totalScore([...indices.words.keys()], letterNumber()))
 
   const statsSummary = () => [
     `Paraules ${stats().foundWords}/${stats().totalWords}`,
@@ -28,16 +28,16 @@ export function GameResult() {
   const groups = () => {
     const result = []
 
-    for (const [digram, value] of Object.entries(digramMap())) {
+    for (const [digram, value] of Object.entries(indices.digrams)) {
       const words = list().reduce((acc: any, word: Word) => {
 
         if (word.slice(0, 2) == digram) {
-          acc.push([wordMap.get(word), isTuti(word, letterNumber())])
+          acc.push([indices.words.get(word), isTuti(word, letterNumber())])
         }
 
         return acc
       }, [])
-      result.push({ digram, words, total: (value as DigramValue).total })
+      result.push({ digram, words, total: (value as DigramValue) })
     }
 
     return result

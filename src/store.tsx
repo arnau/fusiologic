@@ -28,7 +28,7 @@ export function StoreProvider(props: any) {
 
   const initialSet = [...today.letters.slice(0, -1)]
   const requiredLetter = today.letters[today.letters.length - 1]
-  const wordMap = new Map(Object.entries(today.words))
+  const wordIndex = new Map(Object.entries(today.words))
   const [letters, setLetters] = createSignal<LetterSet>(shuffle(initialSet))
   const [words, setWords] = createSignal<WordSet>(new Set())
 
@@ -39,7 +39,7 @@ export function StoreProvider(props: any) {
       save(bagkey, {
         letters: letters(),
         requiredLetter,
-        wordMap: Object.fromEntries(wordMap.entries()),
+        wordMap: Object.fromEntries(wordIndex.entries()),
       })
 
       save(wordkey, [...words()])
@@ -51,22 +51,24 @@ export function StoreProvider(props: any) {
   // setWords(new Set([...wordMap.keys()]))
 
   // Derived
-  const [digramMap, setDigramMap] = createSignal(collectDigrams([...wordMap.keys()]))
+  const indices = {
+    digrams: collectDigrams([...wordIndex.keys()]),
+    words: wordIndex,
+  }
   const stats =
     createMemo(() => ({
       foundWords: words().size,
-      totalWords: wordMap.size,
+      totalWords: wordIndex.size,
       foundTutis: [...words()].filter(word => isTuti(word, letters().length + 1)).length,
-      totalTutis: [...wordMap.keys()].filter(word => isTuti(word, letters().length + 1)).length,
+      totalTutis: [...wordIndex.keys()].filter(word => isTuti(word, letters().length + 1)).length,
     }))
 
   const value = [
     {
       letters,
       requiredLetter,
-      wordMap,
       words,
-      digramMap,
+      indices,
       stats,
     },
     {
@@ -79,19 +81,6 @@ export function StoreProvider(props: any) {
 
           return (new Set(list))
         })
-      },
-
-      incrementDigram(digram: Digram) {
-        if (digram.length != 2) {
-          throw `a digram must have two leters but ${digram} has ${digram.length}`;
-        }
-
-        const value = digramMap()[digram]
-
-        if (value === undefined) { throw `unexpected digram ${digram}`; }
-
-        const { setFound } = value
-        setFound((x: number) => x + 1)
       },
     }
   ]

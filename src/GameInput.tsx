@@ -6,8 +6,8 @@ import { validate } from './aux'
 
 
 export function GameInput() {
-  const [{ letters, requiredLetter, wordMap, words }, { reshuffle, incrementDigram, addWord }]: any = useStore()
-  const bag: Bag = { letters: letters(), requiredLetter, wordMap }
+  const [{ letters, requiredLetter, indices, words }, { reshuffle, addWord }]: any = useStore()
+  const bag: Bag = { letters: letters(), requiredLetter, wordIndex: indices.words }
   const [{input: source}, { removeLetter, reset: resetSource, replace: replaceSource, replaceSink }]: any = useGameInput()
 
   const isDisabled = () => source().length == 0
@@ -20,7 +20,6 @@ export function GameInput() {
 
       if (validationResult.isValid) {
         addWord(source())
-        incrementDigram(source().slice(0, 2))
       }
 
       resetSource()
