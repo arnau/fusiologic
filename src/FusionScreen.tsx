@@ -2,7 +2,7 @@ import { createEffect, createSignal } from 'solid-js';
 
 import styles from './App.module.css';
 import { Rounds } from './Round';
-import { Result } from './Result';
+import { Result } from './FusionResult';
 import { useStore } from './store';
 import { cleanInput } from './cleanInput'
 import { invertIndex } from './aux';

@@ -1,6 +1,6 @@
-import { createContext, createEffect, createMemo, createSignal, onMount, useContext } from 'solid-js';
+import { createContext, createMemo, createSignal, onMount, useContext } from 'solid-js';
 import { today } from './bag';
-import { collectDigrams, isTuti, shuffle } from './aux';
+import { collectDigrams, invertIndex, isTuti, shuffle } from './aux';
 import { LetterSet, Round, RoundList, Word, WordSet } from './types';
 
 
@@ -58,6 +58,7 @@ export function StoreProvider(props: any) {
   const indices = {
     digrams: collectDigrams([...wordIndex.keys()]),
     words: wordIndex,
+    wordsInverted: invertIndex(wordIndex),
   }
   const stats =
     createMemo(() => ({
@@ -71,6 +72,7 @@ export function StoreProvider(props: any) {
     {
       letters,
       requiredLetter,
+      letterCount: initialSet.length + 1,
       words,
       indices,
       stats,
