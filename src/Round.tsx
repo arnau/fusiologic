@@ -1,11 +1,12 @@
 import { For } from "solid-js"
-import { type Cache } from "./types"
 import { Words } from "./Words"
 
 import styles from './Rounds.module.css'
+import { useStore } from "./store"
 
-export function Rounds(props: { cache: Cache }) {
-  const items = props.cache
+export function Rounds() {
+  const [{words, rounds}]: any = useStore()
+  const items = [[...words()], ...rounds()]
 
   return (
     <For each={items}>

@@ -1,6 +1,6 @@
 
 
-function cleanInput(input: string) {
+export function cleanInput(input: string, index: object) {
   let value = input.includes(":")
     ? input.split(":")[1]
     : input

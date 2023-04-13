@@ -53,7 +53,7 @@ const messages = {
 }
 
 export function validate(input: string, bag: Bag, isFound: boolean) {
-  const { letters, requiredLetter, wordIndex} = bag
+  const { letters, requiredLetter, wordIndex } = bag
   const letterSet = [...letters, requiredLetter]
   const inputSet = [...input]
 
@@ -85,6 +85,18 @@ export function failWith(value: string, reason: string) {
   return ({ isValid: false, value, reason })
 }
 
+
+// Indices
+
+export function invertIndex(index: any) {
+  const result: any = {}
+
+  for (const [key, value] of index) {
+    result[value] = key
+  }
+
+  return result
+}
 
 
 // Metrics

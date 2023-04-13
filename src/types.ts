@@ -1,4 +1,5 @@
 export type Round = Array<string>
+export type RoundList = Array<Round>
 export type Cache = Array<Round>
 
 export type Letter = string

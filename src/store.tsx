@@ -1,7 +1,7 @@
 import { createContext, createEffect, createMemo, createSignal, onMount, useContext } from 'solid-js';
 import { today } from './bag';
 import { collectDigrams, isTuti, shuffle } from './aux';
-import { Digram, LetterSet, Word, WordSet } from './types';
+import { LetterSet, Round, RoundList, Word, WordSet } from './types';
 
 
 /**
@@ -25,12 +25,14 @@ export function StoreProvider(props: any) {
   const localkey = today.id
   const bagkey = `${localkey}_bag`
   const wordkey = `${localkey}_word`
+  const roundskey = `${localkey}_rounds`
 
   const initialSet = [...today.letters.slice(0, -1)]
   const requiredLetter = today.letters[today.letters.length - 1]
   const wordIndex = new Map(Object.entries(today.words))
   const [letters, setLetters] = createSignal<LetterSet>(shuffle(initialSet))
   const [words, setWords] = createSignal<WordSet>(new Set())
+  const [rounds, setRounds] = createSignal<RoundList>([])
 
   onMount(() => {
     const cache = load(bagkey)
@@ -39,12 +41,14 @@ export function StoreProvider(props: any) {
       save(bagkey, {
         letters: letters(),
         requiredLetter,
-        wordMap: Object.fromEntries(wordIndex.entries()),
+        wordIndex: Object.fromEntries(wordIndex.entries()),
       })
 
       save(wordkey, [...words()])
+      save(roundskey, rounds())
     } else {
       setWords(new Set(load(wordkey) as WordSet))
+      setRounds(load(roundskey) as RoundList)
     }
   })
 
@@ -70,6 +74,7 @@ export function StoreProvider(props: any) {
       words,
       indices,
       stats,
+      rounds,
     },
     {
       reshuffle() { setLetters(xs => [...shuffle(xs)]) },
@@ -81,6 +86,14 @@ export function StoreProvider(props: any) {
 
           return (new Set(list))
         })
+      },
+
+      addRound(round: Round) {
+        setRounds((xs: RoundList) => [...xs, round])
+      },
+
+      flushRounds() {
+        setRounds([])
       },
     }
   ]

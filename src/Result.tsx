@@ -3,18 +3,19 @@ import { Word } from './Words';
 
 import styles from './Result.module.css'
 import wordStyles from './Words.module.css'
-import { type Cache } from './types';
+import type { RoundList } from './types';
+import { useStore } from './store';
 
 interface TaggedWord {
   round: number;
   word: string;
 }
 
-function mergeRounds(rounds: Cache): TaggedWord[] {
+function mergeRounds(rounds: RoundList): TaggedWord[] {
   const set: Set<string> = new Set()
   let list: TaggedWord[] = []
 
-  for (const [idx, round] of rounds.entries()) {
+  for (const [idx, round] of rounds) {
     for (const word of round) {
       if (!set.has(word)) {
         set.add(word)
@@ -30,26 +31,29 @@ function mergeRounds(rounds: Cache): TaggedWord[] {
   )
 }
 
-export function Result(props: { cache: Cache }) {
-  const rounds = props.cache
-  const list = createMemo(() => mergeRounds(rounds))
+export function Result() {
+  const [{ words, rounds }]: any = useStore()
+  // const list = createMemo(() => mergeRounds(rounds()))
+  const list = createMemo(() => rounds())
 
   return (
-    <details open={true} class={styles.result}>
+    <div class={styles.result}>
       <Show when={list().length > 0} fallback={<p>No tinc paraules! 😶</p>}>
-        <summary>Paraules trobades ({list().length})</summary>
+        <h2>Paraules trobades ({list().length})</h2>
         <ul class={wordStyles.wordList}>
           <For each={list()}>
-            {(item, _index) => <ResultItem {...item} />}
+            {(item, _index) => <ResultItem word={item} />}
           </For>
         </ul>
       </Show>
-    </details>
+    </div>
   )
 }
 
 function ResultItem(props: any) {
   const classname = `${styles.round} ${styles[`round-${props.round}`]}`
+
+  console.log(props)
 
   return (
     <li class={wordStyles.word}>
