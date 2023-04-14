@@ -1,11 +1,9 @@
-import { createEffect, createSignal } from 'solid-js';
-
-import styles from './App.module.css';
-import { Rounds } from './Round';
-import { Result } from './FusionResult';
-import { useStore } from './store';
+import { createSignal } from 'solid-js'
+import styles from './App.module.css'
+import { Rounds } from './FusionRounds'
+import { Result } from './FusionResult'
+import { useStore } from './store'
 import { cleanInput } from './cleanInput'
-import { invertIndex } from './aux';
 
 
 function Input() {
@@ -15,8 +13,10 @@ function Input() {
   const handleSubmit = (event: any) => {
     event.preventDefault()
 
-    const round = cleanInput(input(), invertIndex(indices.words.entries()))
-    addRound(round)
+    const round = cleanInput(input(), indices.wordsInverted)
+    if (round.length > 0) {
+      addRound(round)
+    }
 
     setInput("")
   }
@@ -43,8 +43,8 @@ function Input() {
       ></textarea>
 
       <div class={styles.buttonSet}>
-        <button type="submit">Afegeix</button>
-        <button type="button" onClick={handleCleanup}>Neteja cache</button>
+        <button type="submit">Afegeix contribució</button>
+        <button type="button" onClick={handleCleanup}>Elimina contribucions</button>
       </div>
     </form>
   )

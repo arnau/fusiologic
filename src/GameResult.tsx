@@ -43,9 +43,11 @@ export function GameResult() {
     return result
   }
 
+  const listDisplay = () => list().map(x => indices.words.get(x)).join(", ")
+
   return (
     <div class={styles.result} onDblClick={() => { setLegacy(x => !x) }}>
-      <Show when={!legacy()} fallback={<div>{statsSummary().join(' ')}: {list().join(", ")}</div>}>
+      <Show when={!legacy()} fallback={<div>{statsSummary().join(' ')}: {listDisplay()}</div>}>
         <div class={styles.summary}>
           {statsSummary().join('. ')}.
         </div>

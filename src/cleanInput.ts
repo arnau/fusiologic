@@ -1,17 +1,28 @@
 
 
-export function cleanInput(input: string, index: object) {
+export function cleanInput(input: string, index: Map<string, string>) {
   let value = input.includes(":")
-    ? input.split(":")[1]
-    : input
+    ? input.trim().split(":")[1]
+    : input.trim()
 
   if (value.endsWith(".")) {
     value = value.slice(0, -1)
   }
 
-  return value
+  const list = value
     .split(", ")
-    .map(x => x.trim())
-    .filter(x => !x.includes(",") && !x.includes(";"))
-}
+    .reduce((acc: Array<string>, token: string) => {
+      const phrase = token.trim()
+      const word = index.get(phrase)
 
+      if (word !== undefined) {
+        acc.push(word!)
+      }
+
+      return acc
+    }, [])
+
+    list.sort()
+
+    return list
+}

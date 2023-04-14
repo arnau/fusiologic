@@ -89,10 +89,10 @@ export function failWith(value: string, reason: string) {
 // Indices
 
 export function invertIndex(index: any) {
-  const result: any = {}
+  const result: any = new Map()
 
   for (const [key, value] of index) {
-    result[value] = key
+    result.set(value, key)
   }
 
   return result

@@ -92,10 +92,12 @@ export function StoreProvider(props: any) {
 
       addRound(round: Round) {
         setRounds((xs: RoundList) => [...xs, round])
+        save(roundskey, rounds())
       },
 
       flushRounds() {
         setRounds([])
+        save(roundskey, rounds())
       },
     }
   ]
