@@ -1,8 +1,8 @@
 const fs = require('fs/promises')
 
 const url = 'https://www.vilaweb.cat/paraulogic/'
-const re_yesterday = /var\sy=(.+?);/
-const re_today = /var\st=(.+?);/
+const re_yesterday = /var\sy=({.+?});/
+const re_today = /var\st=(\{.+?\});/
 
 async function reshape(yesterday, today) {
   let today_date = new Date()
