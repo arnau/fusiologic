@@ -1,4 +1,4 @@
-import type { Bag, DigramIndex, Letter, LetterSet, Word } from "./types";
+import type { Bag, DigramIndex, Letter, LetterSet, RoundList, TaggedWord, Word, WordIndex } from "./types";
 
 export function isTuti(word: Word, max: number) {
   const wordLetterNumber = (new Set(word)).size
@@ -113,3 +113,26 @@ export function collectDigrams(words: Array<Word>): DigramIndex {
 
   return result
 }
+
+export function mergeRounds(rounds: RoundList, wordIndex: WordIndex, letterCount: number): TaggedWord[] {
+  const set: Set<string> = new Set()
+  let list: TaggedWord[] = []
+
+  for (const [idx, round] of rounds.entries()) {
+    for (const word of round) {
+      if (!set.has(word)) {
+        const wordDisplay = wordIndex.get(word)!
+        set.add(word)
+        list.push({ round: idx + 1, word: wordDisplay, isTuti: isTuti(word, letterCount) })
+      }
+    }
+  }
+
+  list.sort((a, b) => a.word.localeCompare(b.word, 'ca', { sensitivity: 'base' }))
+
+  return (
+    list
+  )
+}
+
+

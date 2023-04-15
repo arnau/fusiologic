@@ -15,6 +15,15 @@ export interface DigramIndex {
 }
 export type DigramValue = number
 
+// export interface DigramMetrics {
+//   [key: Digram]: DigramMetric,
+// }
+export type DigramMetrics = Array<[Digram, DigramMetric]>
+export interface DigramMetric {
+  total: number,
+  found: number,
+}
+
 
 export interface Bag {
   letters: LetterSet,

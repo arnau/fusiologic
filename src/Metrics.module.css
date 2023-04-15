@@ -1,22 +1,67 @@
-.digrams {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-  grid-gap: 4px;
-}
-
-.digrams .item {
-  background-color: lightblue;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 2px;
-}
-
-.digrams .key {
+.section {
   background-color: white;
-  padding: 0 2px;
+  border: 1px solid antiquewhite;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 8px;
 }
 
-.digrams .value {
+.section ul {
+  margin: 0;
+}
+
+.section li {
+  white-space: nowrap;
+}
+
+.section {
+  columns: 6;
+}
+
+@media (max-width: 900px) {
+  .section {
+    columns: 5;
+  }
+}
+
+@media (max-width: 600px) {
+  .section{
+    columns: 4;
+  }
+}
+
+@media (max-width: 450px) {
+  .section {
+    columns: 3;
+  }
+}
+
+@media (max-width: 360px) {
+  .section {
+    columns: 2;
+  }
+}
+
+
+.grid {
+  background-color: white;
+  border: 1px solid antiquewhite;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 8px;
+  /* font-size: 11px; */
+  overflow-x: auto;
+}
+
+.grid table {
+  border-spacing: 4px;
+}
+
+.grid table > tr td {
+  background-color: whitesmoke;
+  padding: 4px;
   text-align: end;
-  padding: 0 2px;
+}
+.grid table > tr th {
+  padding: 4px;
 }
