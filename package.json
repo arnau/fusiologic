@@ -1,13 +1,13 @@
 {
   "name": "fusiologic",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "private": true,
   "license": "MIT",
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run fetch_words && vite build",
     "serve": "vite preview",
     "fetch_words": "node word_fetcher.js"
   },
