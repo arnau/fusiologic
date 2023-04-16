@@ -2,7 +2,7 @@ name: Shake tree
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 0 * * *' # https://crontab.guru/
+    - cron: '5 23 * * *' # https://crontab.guru/
 
 jobs:
   shaker:
