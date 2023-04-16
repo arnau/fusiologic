@@ -1,0 +1,11 @@
+name: Shake tree
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 0 * * *' # https://crontab.guru/
+
+jobs:
+  shaker:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -X POST -d {} https://api.netlify.com/build_hooks/${{ secrets.NETLIFY_HOOK }}
