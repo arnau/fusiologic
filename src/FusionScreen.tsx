@@ -13,7 +13,7 @@ function Input() {
   const handleSubmit = (event: any) => {
     event.preventDefault()
 
-    const round = cleanInput(input(), indices.wordsInverted)
+    const round = cleanInput(input(), indices)
     if (round.length > 0) {
       addRound(round)
     }

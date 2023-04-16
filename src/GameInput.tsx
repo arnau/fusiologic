@@ -32,7 +32,7 @@ export function GameInput() {
   }
   const handleInput = (event: InputEvent) => {
     const target = event.currentTarget as HTMLInputElement
-    replaceSource(target.value)
+    replaceSource(target.value.toLowerCase())
   }
 
   return (

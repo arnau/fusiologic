@@ -1,4 +1,4 @@
-import { For } from "solid-js"
+import { For, createEffect } from "solid-js"
 import { useStore } from "./store"
 import { DigramMetrics } from "./types"
 import styles from './Metrics.module.css'
@@ -68,7 +68,7 @@ export function Metrics() {
           [acc[0] + f, acc[1] + t], [0, 0])
 
         // @ts-ignore
-        values[13] = sum
+        values[values.length - 1] = sum
 
         return [letter, values]
       })
