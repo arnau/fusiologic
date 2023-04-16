@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "npm run fetch_words && vite build",
+    "build": "npm run fetch_words && vite build && cp _redirects dist/",
     "serve": "vite preview",
     "fetch_words": "node word_fetcher.js"
   },
