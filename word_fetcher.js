@@ -3,10 +3,11 @@ const fs = require('fs/promises')
 const url = 'https://www.vilaweb.cat/paraulogic/'
 const re_yesterday = /var\sy=({.+?});/
 const re_today = /var\st=(\{.+?\});/
+const re_today_date = /data-joc=\"([^"]+?)\"/
 
-async function reshape(yesterday, today) {
-  let today_date = new Date()
-  let yesterday_date = new Date();
+async function reshape(today_stamp, yesterday, today) {
+  let today_date = new Date(today_stamp)
+  let yesterday_date = new Date(today_stamp);
   yesterday_date.setDate(yesterday_date.getDate() - 1);
 
   return [
@@ -33,9 +34,10 @@ async function main() {
     if (response.status == 200) {
       const body = (await response.text()).replaceAll('&nbsp;', ' ')
 
+      const d = re_today_date.exec(body)[1]
       const y = re_yesterday.exec(body)[1]
       const t = re_today.exec(body)[1]
-      const [yesterday, today] = await reshape(JSON.parse(y), JSON.parse(t))
+      const [yesterday, today] = await reshape(d, JSON.parse(y), JSON.parse(t))
       const yesterday_json = JSON.stringify(yesterday)
       const today_json = JSON.stringify(today)
 
