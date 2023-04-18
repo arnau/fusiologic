@@ -7,7 +7,7 @@ import { Metrics } from './Metrics';
 
 
 export function Result() {
-  const [{ letterCount, words, rounds, indices }]: any = useStore()
+  const [{ letterCount, words, rounds, indices, score }]: any = useStore()
   const list = createMemo(() =>
     mergeRounds([[...words()], ...rounds()], indices.words, letterCount))
 
@@ -15,7 +15,7 @@ export function Result() {
     <>
       <section class={styles.result}>
         <Show when={list().length > 0} fallback={<p>No tinc paraules! 😶</p>}>
-          <h2>Paraules trobades ({list().length})</h2>
+          <h2>Paraules trobades ({list().length}) {score()[1]} {score()[0]}</h2>
           <ul class={wordStyles.wordList}>
             <For each={list()}>
               {(item, _index) => <ResultItem {...item} />}
