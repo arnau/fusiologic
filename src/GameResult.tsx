@@ -7,7 +7,7 @@ import { isTuti, totalScore } from './aux'
 
 export function GameResult() {
   const [legacy, setLegacy] = createSignal(false)
-  const [{ letters, words, indices, stats }]: any = useStore()
+  const [{ letters, words, indices, stats, score }]: any = useStore()
   const letterNumber = () => letters().length + 1
   const list = () => {
     const array = [...words()]
@@ -49,7 +49,7 @@ export function GameResult() {
     <div class={styles.result} onDblClick={() => { setLegacy(x => !x) }}>
       <Show when={!legacy()} fallback={<div>{statsSummary().join(' ')}: {listDisplay()}</div>}>
         <div class={styles.summary}>
-          {statsSummary().join('. ')}.
+          {statsSummary().join('. ')}. {score()[1]} {score()[0]}
         </div>
         <div class={styles.group_set}>
           <For each={groups()}>

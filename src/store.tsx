@@ -1,6 +1,6 @@
 import { createContext, createMemo, createSignal, onMount, useContext } from 'solid-js';
 import { today } from './bag';
-import { collectDigrams, invertIndex, isTuti, shuffle } from './aux';
+import { collectDigrams, invertIndex, isTuti, shuffle, totalScore } from './aux';
 import { LetterSet, Round, RoundList, Word, WordSet } from './types';
 
 
@@ -20,6 +20,32 @@ function load(key: string) {
 }
 
 export const StoreContext = createContext()
+
+
+const levels = [
+  ["", ""],
+  ["mindundi", "💩"],
+  ["croqueta", "🥺"],
+  ["mitjania", "😒"],
+  ["agut", "😎"],
+  ["eixerit", "😏"],
+  ["ieni", "🧐"],
+]
+
+function find_level(score: number, max_score: number) {
+  if (score == 0) { return levels[0]; }
+
+  let percent = (score / max_score) * 100
+
+  if (percent < 10) { return levels[1]; }
+  if (percent < 20) { return levels[2]; }
+  if (percent < 40) { return levels[3]; }
+  if (percent < 70) { return levels[4]; }
+  if (percent < 100) { return levels[5]; }
+
+  return 7;
+}
+
 
 export function StoreProvider(props: any) {
   const localkey = today.id
@@ -77,6 +103,13 @@ export function StoreProvider(props: any) {
       indices,
       stats,
       rounds,
+
+      score() {
+        const current = totalScore([...words()], initialSet.length + 1)
+        const max = totalScore([...wordIndex.keys()], initialSet.length + 1)
+
+        return find_level(current, max)
+      },
     },
     {
       reshuffle() { setLetters(xs => [...shuffle(xs)]) },
@@ -99,6 +132,7 @@ export function StoreProvider(props: any) {
         setRounds([])
         save(roundskey, rounds())
       },
+
     }
   ]
 
