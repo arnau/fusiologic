@@ -104,8 +104,8 @@ export function StoreProvider(props: any) {
       stats,
       rounds,
 
-      score() {
-        const current = totalScore([...words()], initialSet.length + 1)
+      score(list: string[]) {
+        const current = totalScore(list, initialSet.length + 1)
         const max = totalScore([...wordIndex.keys()], initialSet.length + 1)
 
         return find_level(current, max)

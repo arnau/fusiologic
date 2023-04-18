@@ -49,7 +49,7 @@ export function GameResult() {
     <div class={styles.result} onDblClick={() => { setLegacy(x => !x) }}>
       <Show when={!legacy()} fallback={<div>{statsSummary().join(' ')}: {listDisplay()}</div>}>
         <div class={styles.summary}>
-          {statsSummary().join('. ')}. {score()[1]} {score()[0]}
+          {statsSummary().join('. ')}. {score(list())[1]} {score(list())[0]}
         </div>
         <div class={styles.group_set}>
           <For each={groups()}>
