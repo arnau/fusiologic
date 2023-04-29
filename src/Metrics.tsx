@@ -1,4 +1,4 @@
-import { For, createEffect } from "solid-js"
+import { For, Show, createEffect } from "solid-js"
 import { useStore } from "./store"
 import { DigramMetrics } from "./types"
 import styles from './Metrics.module.css'
@@ -124,9 +124,21 @@ function Row(props: any) {
       <th>{props.letter}</th>
       <For each={props.values.slice(3)}>
         {
-          ([found, total]) => <td>{found}/{total}</td>
+          ([found, total]) => <Cell found={found} total={total} />
         }
       </For>
     </tr>
+  )
+}
+
+function Cell(props: any) {
+  return (
+    <Show when={props.total > 0} fallback={<td></td>}>
+      <td>
+        <span class={styles.cell}>
+          <span class={styles.found_number}>{props.found}</span> <span>{props.total}</span>
+        </span>
+      </td>
+    </Show>
   )
 }

@@ -55,13 +55,28 @@
 
 .grid table {
   border-spacing: 4px;
+  empty-cells: show;
 }
 
 .grid table > tr td {
   background-color: whitesmoke;
-  padding: 4px;
+}
+
+.grid table > tr th {
+  padding: 2px;
+}
+
+.grid td > span {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid td > span span {
+  padding: 2px;
   text-align: end;
 }
-.grid table > tr th {
-  padding: 4px;
+
+.grid td > span span.found_number {
+  background-color: lightpink;
+  padding-right: 4px;
 }
