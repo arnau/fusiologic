@@ -9,12 +9,7 @@ export function GameResult() {
   const [legacy, setLegacy] = createSignal(false)
   const [{ letters, words, indices, stats, score }]: any = useStore()
   const letterNumber = () => letters().length + 1
-  const list = () => {
-    const array = [...words()]
-    array.sort()
-
-    return array
-  }
+  const list = () => [...words()]
   const currentPoints = () => totalScore(list(), letterNumber())
   const totalPoints = createMemo(() =>
     totalScore([...indices.words.keys()], letterNumber()))
@@ -39,6 +34,8 @@ export function GameResult() {
       }, [])
       result.push({ digram, words, total: (value as DigramValue) })
     }
+
+    result.sort()
 
     return result
   }
