@@ -3,3 +3,4 @@ dist
 src/bag.js
 raw_sources
 word_db
+fetcher.sh
