@@ -1,4 +1,4 @@
-import { For, Show, createEffect } from "solid-js"
+import { For, Match, Show, Switch, createEffect } from "solid-js"
 import { useStore } from "./store"
 import { DigramMetrics } from "./types"
 import styles from './Metrics.module.css'
@@ -133,12 +133,22 @@ function Row(props: any) {
 
 function Cell(props: any) {
   return (
-    <Show when={props.total > 0} fallback={<td></td>}>
-      <td>
-        <span class={styles.cell}>
-          <span class={styles.found_number}>{props.found}</span> <span>{props.total}</span>
-        </span>
-      </td>
-    </Show>
+    <Switch>
+      <Match when={props.total == 0}>
+        <td></td>
+      </Match>
+      <Match when={props.total === props.found}>
+        <td>
+          <span class={styles.complete}>{props.total}</span>
+        </td>
+      </Match>
+      <Match when={props.total > 0}>
+        <td>
+          <span class={styles.cell}>
+            <span class={styles.found_number}>{props.found}</span> <span>{props.total}</span>
+          </span>
+        </td>
+      </Match>
+    </Switch>
   )
 }
