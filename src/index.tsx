@@ -1,14 +1,17 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import { Router } from "@solidjs/router";
+import { Route, Router } from "@solidjs/router";
+import { GameScreen } from "./GameScreen";
+import { FusionScreen } from "./FusionScreen";
 
-import './index.css';
 import App from './App';
+import './index.css';
 
 render(
   () => (
-    <Router>
-      <App />
+    <Router root={App}>
+      <Route path="/fusio" component={FusionScreen} />
+      <Route path="/" component={GameScreen} />
     </Router>
   ),
   document.getElementById('root') as HTMLElement

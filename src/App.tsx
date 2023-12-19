@@ -1,12 +1,9 @@
-import { Route, Routes, A } from "@solidjs/router";
+import { A } from "@solidjs/router";
 
 import { StoreProvider } from "./store"
-import { GameScreen } from "./GameScreen";
-import { FusionScreen } from "./FusionScreen";
-
 import styles from './App.module.css';
 
-function App() {
+function App(props: any) {
   return (
     <StoreProvider>
       <div class={styles.App}>
@@ -18,14 +15,11 @@ function App() {
           </nav>
         </header>
         <main>
-          <Routes>
-            <Route path="/fusio" component={FusionScreen} />
-            <Route path="/" component={GameScreen} />
-          </Routes>
+          {props.children}
         </main>
       </div>
     </StoreProvider>
-  )
+  ) 
 }
 
 export default App;
