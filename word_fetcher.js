@@ -1,4 +1,4 @@
-const fs = require('fs/promises')
+import fs from "fs/promises"
 
 const url = 'https://www.vilaweb.cat/paraulogic/'
 const re_yesterday = /var\sy={"l":(\[.+?\]),"p":({[^}]+?})/
