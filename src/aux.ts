@@ -123,7 +123,7 @@ export function mergeRounds(rounds: RoundList, wordIndex: WordIndex, letterCount
       if (!set.has(word)) {
         const wordDisplay = wordIndex.get(word)!
         set.add(word)
-        list.push({ round: idx + 1, word: wordDisplay, isTuti: isTuti(word, letterCount) })
+        list.push({ round: idx + 1, word: wordDisplay, tag: word, isTuti: isTuti(word, letterCount) })
       }
     }
   }

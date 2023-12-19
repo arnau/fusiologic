@@ -34,5 +34,6 @@ export interface Bag {
 export interface TaggedWord {
   round: number;
   word: string;
+  tag: string;
   isTuti: boolean;
 }

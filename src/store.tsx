@@ -43,7 +43,7 @@ function find_level(score: number, max_score: number) {
   if (percent < 70) { return levels[4]; }
   if (percent < 100) { return levels[5]; }
 
-  return 7;
+  return levels[6];
 }
 
 
@@ -77,8 +77,6 @@ export function StoreProvider(props: any) {
       setRounds(load(roundskey) as RoundList)
     }
   })
-
-  // setWords(new Set([...wordMap.keys()]))
 
   // Derived
   const indices = {
